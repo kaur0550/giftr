@@ -13,13 +13,27 @@ let app = {
 
     addListeners: ()=>{
         let addPerson = document.getElementById("addButton");
-        addPerson.addEventListener('click', app.addMorePeople);
+        addPerson.addEventListener('click', app.check);
+
+        // let addGift = document.getElementById("addButton");
+        // addGift.addEventListener('click', app.addMoreGift);
 
         let saveP = document.getElementById("saveP");
         saveP.addEventListener('click', app.savePerson);
 
         let saveG = document.getElementById("saveG");
         saveG.addEventListener('click', app.saveGift);
+    },
+
+    check:()=>{
+        let dataAction = document.getElementById('addButton').getAttribute('data-action');
+
+        if(dataAction == 'personForm'){
+            app.addMorePeople();
+        }
+        else if(dataAction == 'giftForm'){
+            app.addMoreGift();
+        }
     },
 
     getPeopleList: ()=>{
@@ -52,12 +66,13 @@ let app = {
 
     addMorePeople: ()=>{
         console.log('add people form');
-        let dataAction = document.getElementById('addButton').getAttribute('data-action');
+        // let dataAction = document.getElementById('addButton').getAttribute('data-action');
 
-        if(dataAction == 'personForm'){
+        // if(dataAction == 'personForm'){
+    // }
             console.log('worked');
             document.getElementById('editPerson').setAttribute('data-state', "personForm");
-        }
+        
         // document.getElementById("people").classList.remove('active');
         // document.getElementById("people").classList.add('hide');
         // document.getElementById("editPerson").classList.remove('hide');
@@ -170,10 +185,10 @@ let app = {
                 df.appendChild(btn);
                 divf.appendChild(df);
 
-                df.addEventListener('click', app.addMoreGift);
+                df.addEventListener('click', app.giftList);
                 btn.addEventListener('click',app.delete);
             });
-
+            document.getElementById('addButton').setAttribute('data-action', 'personForm');
             document.getElementById('people').innerHTML = " ";
             document.getElementById('people').appendChild(divf);
         }
@@ -187,8 +202,21 @@ let app = {
         dob.value = " ";
     },
 
-    addMoreGift: ()=>{
+    giftList: (ev)=>{
+        ev.preventDefault();
+        console.log(ev.currentTarget.textContent);
+        let info = ev.currentTarget.innerHTML;
+        console.log(info);
+        document.getElementById('onePerson').innerHTML = info;
         console.log("click worked");
+        document.getElementById("people").classList.remove('active');
+        document.getElementById("people").classList.add('hide');
+        document.getElementById('onePerson').classList.remove('hide');
+        document.getElementById('onePerson').classList.add('active');
+
+        // document.getElementById('editGift').setAttribute('data-state', 'giftForm');
+        document.getElementById('addButton').setAttribute('data-action', 'giftForm');
+        
     },
 
     saveGift:()=>{
@@ -221,8 +249,13 @@ let app = {
         }
     },
 
-    giftList:()=>{
-        
+    addMoreGift:()=>{
+        let dataAction = document.getElementById('addButton').getAttribute('data-action');
+
+        if(dataAction == 'giftForm'){
+            console.log('giftForm');
+            document.getElementById('editGift').setAttribute('data-state', "giftForm");
+        }
     },
 
     delete: (ev)=>{
