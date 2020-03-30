@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Giftr</title>
+</head>
+<body>
+    <div class ="header">
+        <button type="button" id = "addPerson">ADD Person</button>
+        <button type="button" id = "addGift">ADD Gift</button>
+    </div>   
+    <div class="title">
+        <h1>Giftr Birthday Database</h1>
+    </div>
+    <section id = "people" class = "active">
+        <p class = "noReview">There is no person to show.</p>
+    </section>
+    <section id = "editPerson">
+            <form>
+                    <div id = "form">
+                        <label for="name">Enter Your Name</label>
+                        <input type="text" title="Enter your name" id="name" required>
+                        <label for="dob"> Enter your dob</label>
+                        <input type="date" id="dob" title="enter your dob" required>
+                        <div id="btnSC">
+                            <button type="button" id = "cancelP">Cancel</button>
+                            <button type="button" id = "saveP">Save</button>
+                        </div>
+                    </div>
+                </form>
+    </section>
+    <section id = "editGift">
+        <form>
+            <div id="form">
+                <label for="name" class="giftidea">Gift Idea:</label>
+                <input type="text" class="textgift" title="Gift Idea" id="giftTitle" required>
+                <label for="name">Price</label>
+                <input type="number" class="pricetext" title="Gift Idea" id="priceInfo" required> 
+                        
+                <label for="name" class="storename">Store</label>
+                <input type="text" class="storetext" title="Gift Idea" id="storeName" required>      
+                        
+                <label for="giftUrl">Store's Website </label>
+                <input type="url" class="storeweb" title="storeUrl" id="storeUrl" placeholder="http://example.com" required pattern="https?://.+">
+        
+                <div id="btnSC">
+                        <button type="button" id = "cancelG">Cancel</button>
+                        <button type="button" id = "saveG">Save</button>
+                 </div>
+        
+            </div>
+        </form>
+    </section>
+    <script type="text/javascript" src="js/moment.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
