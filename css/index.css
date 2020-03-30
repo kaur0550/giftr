@@ -71,3 +71,9 @@ img{
     margin-block-start: 1em;
     margin-block-end: 1em;
 }
+[data-state = "personForm"]{
+    display:block;
+}
+[data-state = "giftForm"]{
+    display:block;
+}

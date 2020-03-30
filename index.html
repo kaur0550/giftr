@@ -10,8 +10,8 @@
 </head>
 <body>
     <div class ="header">
-        <button type="button" id = "addPerson">ADD Person</button>
-        <button type="button" id = "addGift">ADD Gift</button>
+        <button type="button" id = "addButton" data-action = "personForm">ADD</button>
+        <!-- <button type="button" id = "addGift">ADD Gift</button> -->
     </div>   
     <div class="title">
         <h1>Giftr Birthday Database</h1>
@@ -19,7 +19,7 @@
     <section id = "people" class = "active">
         <p class = "noReview">There is no person to show.</p>
     </section>
-    <section id = "editPerson">
+    <section id = "editPerson" class = "hide">
             <form>
                     <div id = "form">
                         <label for="name">Enter Your Name</label>
@@ -33,7 +33,7 @@
                     </div>
                 </form>
     </section>
-    <section id = "editGift">
+    <section id = "editGift" class = "hide">
         <form>
             <div id="form">
                 <label for="name" class="giftidea">Gift Idea:</label>

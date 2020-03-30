@@ -12,7 +12,7 @@ let app = {
     },
 
     addListeners: ()=>{
-        let addPerson = document.getElementById("addPerson");
+        let addPerson = document.getElementById("addButton");
         addPerson.addEventListener('click', app.addMorePeople);
 
         let saveP = document.getElementById("saveP");
@@ -52,6 +52,12 @@ let app = {
 
     addMorePeople: ()=>{
         console.log('add people form');
+        let dataAction = document.getElementById('addButton').getAttribute('data-action');
+
+        if(dataAction == 'personForm'){
+            console.log('worked');
+            document.getElementById('editPerson').setAttribute('data-state', "personForm");
+        }
         // document.getElementById("people").classList.remove('active');
         // document.getElementById("people").classList.add('hide');
         // document.getElementById("editPerson").classList.remove('hide');
@@ -105,6 +111,7 @@ let app = {
 
             console.log(app.people);
             app.createList();
+            document.getElementById('editPerson').removeAttribute('data-state');
             app.cleanPersonForm();
             let data = app.people;
             console.log(data.length);
