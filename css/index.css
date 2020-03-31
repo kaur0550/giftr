@@ -77,7 +77,7 @@ img{
 [data-state = "giftForm"]{
     display:block;
 }
-#onePerson{
+.onePerson{
     display: flex;
     flex-direction: row;
     justify-content: space-around;

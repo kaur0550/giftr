@@ -230,6 +230,7 @@ let app = {
         console.log(info);
         document.getElementById('onePerson').innerHTML = info;
         console.log("click worked");
+        document.getElementById('editPerson').removeAttribute('data-state');
         document.getElementById("people").classList.remove('active');
         document.getElementById("people").classList.add('hide');
         document.getElementById('onePerson').classList.remove('hide');
@@ -237,8 +238,10 @@ let app = {
 
         // document.getElementById('editGift').setAttribute('data-state', 'giftForm');
         document.getElementById('addButton').setAttribute('data-action', 'giftForm');
+        document.querySelector('#onePerson img').setAttribute('src', 'img/back.png');
         let id = document.querySelector('#onePerson img').getAttribute('data-target');
         console.log(id);
+        document.querySelector('#onePerson img').addEventListener('click', app.back);
         document.getElementById('people').setAttribute('data-people', id);
         app.giftList(id);
         
@@ -246,7 +249,8 @@ let app = {
 
     giftList: (id)=>{
         // const found = array1.find(element => element > 10);
-
+        document.getElementById('gifts').classList.remove('hide');
+        document.getElementById('gifts').classList.add('active');
         let person = app.people.find(element => element.personID == id);
         console.log(person); 
         console.log(person.giftIdea);
@@ -289,6 +293,7 @@ let app = {
                 df.appendChild(btn);
                 
             });
+            document.getElementById('gifts').innerHTML=" ";
             document.getElementById('gifts').appendChild(df);
             console.log(app.people);
             let data = app.people;
@@ -383,6 +388,18 @@ let app = {
         ev.preventDefault();
         document.getElementById('editGift').removeAttribute('data-state');
         app.cleanGiftForm();
+    },
+
+    back: ()=>{
+        document.getElementById("people").classList.remove('hide');
+        document.getElementById("people").classList.add('active');
+        document.getElementById('onePerson').classList.remove('active');
+        document.getElementById('onePerson').classList.add('hide');
+        document.getElementById('addButton').setAttribute('data-action', 'personForm');
+        document.getElementById('gifts').classList.remove('active');
+        document.getElementById('gifts').classList.add('hide');
+        document.getElementById('gifts').innerHTML = " ";
+        document.getElementById('editGift').removeAttribute('data-state');
     }
 }
 
