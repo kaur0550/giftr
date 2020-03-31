@@ -4,6 +4,7 @@ let app = {
     people:[],
     KEY:[],
     gift:{},
+    gifts:new Array(),
     init: function(){
         app.getPeopleList();
         app.addListeners();
@@ -120,7 +121,7 @@ let app = {
                 "personID": personID,
                 "personName": personName,
                 "persondob": persondob,
-                "giftIdea":[]
+                "giftIdea": []
             };
 
             app.person = person;
@@ -245,11 +246,12 @@ let app = {
 
         let person = app.people.find(element => element.personID == id);
         console.log(person); 
-        
-        let gifts = person.giftIdea;
-        console.log(gifts);
+        console.log(person.giftIdea);
+        console.log(app.gifts);
+        //app.gifts.push(person.giftIdea);
+        console.log(app.gifts);
 
-        if(gifts.length == 0)
+        if(app.gifts.length == 0 && person.giftIdea == 0)
         {
             console.log("no gifts");
             let p = document.createElement('p');
@@ -260,7 +262,39 @@ let app = {
         }
         else{
             document.getElementById('gifts').innerHTML = " ";
-            
+            let df = document.createElement('div');
+            console.log(person.giftIdea);
+            person.giftIdea.forEach(gift =>{
+                //let df = document.createElement('div');
+                let ptitle = document.createElement('p');
+                let pprice = document.createElement('p');
+                let pstorename = document.createElement('p');
+                let pstoreurl = document.createElement('p');
+                let btn = document.createElement('btn');
+
+                ptitle.textContent = gift.title;
+                pprice.textContent = gift.price;
+                console.log(gift.location);
+                pstorename.textContent = gift.location.storeN;
+                pstoreurl.textContent = gift.location.storeU;
+                btn.setAttribute("src", 'img/delete.png');
+
+                df.appendChild(ptitle);
+                df.appendChild(pprice);
+                df.appendChild(pstorename);
+                df.appendChild(pstoreurl);
+                df.appendChild(btn);
+                
+            });
+            document.getElementById('gifts').appendChild(df);
+            console.log(app.people);
+            let data = app.people;
+            console.log(data.length);
+
+            data.forEach(element => {
+                KEY = element.KEY;
+                localStorage.setItem(KEY, JSON.stringify(element));
+            });
         }
     },
 
@@ -298,8 +332,9 @@ let app = {
             if(dataPeople != "all")
             {
                 let person = app.people.find(element => element.personID == dataPeople);
-                person.giftIdea = app.gift;
+                person.giftIdea.push(app.gift);
                 console.log(person);
+                app.gifts.push(person.giftIdea);
             }
 
             app.cleanGiftForm();
