@@ -27,6 +27,9 @@ let app = {
 
         let cancelP = document.getElementById("cancelP");
         cancelP.addEventListener('click', app.cancelPerson);
+
+        let cancelG = document.getElementById("cancelG");
+        cancelG.addEventListener('click', app.cancelGift);
     },
 
     check:()=>{
@@ -374,6 +377,12 @@ let app = {
         ev.preventDefault();
         document.getElementById('editPerson').removeAttribute('data-state');
         app.cleanPersonForm();
+    },
+
+    cancelGift: (ev)=>{
+        ev.preventDefault();
+        document.getElementById('editGift').removeAttribute('data-state');
+        app.cleanGiftForm();
     }
 }
 
