@@ -165,7 +165,7 @@ let app = {
             console.log(people);
             let div = document.getElementById('people');
             div.innerHTML = " ";
-            
+            document.getElementById('people').setAttribute('data-people', 'all');
             let divf = document.createElement('div');
 
             console.log(people);
@@ -188,7 +188,7 @@ let app = {
                 df.appendChild(btn);
                 divf.appendChild(df);
 
-                df.addEventListener('click', app.giftList);
+                df.addEventListener('click', app.onePersonData);
                 btn.addEventListener('click',app.delete);
             });
             // document.getElementById('addButton').setAttribute('data-action', 'personForm');
@@ -219,7 +219,7 @@ let app = {
         storeUrl.value = " ";
     },
 
-    giftList: (ev)=>{
+    onePersonData: (ev)=>{
         ev.preventDefault();
         console.log(ev.currentTarget.textContent);
         let info = ev.currentTarget.innerHTML;
@@ -233,7 +233,35 @@ let app = {
 
         // document.getElementById('editGift').setAttribute('data-state', 'giftForm');
         document.getElementById('addButton').setAttribute('data-action', 'giftForm');
+        let id = document.querySelector('#onePerson img').getAttribute('data-target');
+        console.log(id);
+        document.getElementById('people').setAttribute('data-people', id);
+        app.giftList(id);
         
+    },
+
+    giftList: (id)=>{
+        // const found = array1.find(element => element > 10);
+
+        let person = app.people.find(element => element.personID == id);
+        console.log(person); 
+        
+        let gifts = person.giftIdea;
+        console.log(gifts);
+
+        if(gifts.length == 0)
+        {
+            console.log("no gifts");
+            let p = document.createElement('p');
+            let div = document.createElement('div');
+            p.textContent = " No gifts for this person. Click on Add button to add ideas.";
+            div.appendChild(p);
+            document.getElementById('gifts').appendChild(div);
+        }
+        else{
+            document.getElementById('gifts').innerHTML = " ";
+            
+        }
     },
 
     saveGift:()=>{
@@ -263,6 +291,20 @@ let app = {
             }
 
             app.gift = gift;
+            console.log(app.gift);
+
+            let dataPeople = document.getElementById('people').getAttribute('data-people');
+            
+            if(dataPeople != "all")
+            {
+                let person = app.people.find(element => element.personID == dataPeople);
+                person.giftIdea = app.gift;
+                console.log(person);
+            }
+
+            app.cleanGiftForm();
+            document.getElementById('editGift').removeAttribute('data-state');
+            app.giftList(dataPeople);
         }
     },
 
