@@ -23,6 +23,9 @@ let app = {
 
         let saveG = document.getElementById("saveG");
         saveG.addEventListener('click', app.saveGift);
+
+        let cancelP = document.getElementById("cancelP");
+        cancelP.addEventListener('click', app.cancelPerson);
     },
 
     check:()=>{
@@ -188,7 +191,7 @@ let app = {
                 df.addEventListener('click', app.giftList);
                 btn.addEventListener('click',app.delete);
             });
-            document.getElementById('addButton').setAttribute('data-action', 'personForm');
+            // document.getElementById('addButton').setAttribute('data-action', 'personForm');
             document.getElementById('people').innerHTML = " ";
             document.getElementById('people').appendChild(divf);
         }
@@ -200,6 +203,20 @@ let app = {
 
         name.value = " ";
         dob.value = " ";
+    },
+
+    cleanGiftForm:()=>{
+        let giftTitle = document.getElementById('giftTitle');
+        giftTitle.value = " ";
+
+        let priceInfo = document.getElementById('priceInfo');
+        priceInfo.value = " ";
+
+        let storeName = document.getElementById('storeName');
+        storeName.value = " ";
+
+        let storeUrl = document.getElementById('storeUrl');
+        storeUrl.value = " ";
     },
 
     giftList: (ev)=>{
@@ -274,6 +291,12 @@ let app = {
             });
             app.createList();
         });
+    },
+
+    cancelPerson: (ev)=>{
+        ev.preventDefault();
+        document.getElementById('editPerson').removeAttribute('data-state');
+        app.cleanPersonForm();
     }
 }
 
