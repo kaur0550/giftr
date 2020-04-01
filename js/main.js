@@ -269,7 +269,7 @@ let app = {
         document.getElementById("people").classList.remove('active');
         document.getElementById("people").classList.add('hide');
         document.getElementById('onePerson').classList.remove('hide');
-        document.getElementById('onePerson').classList.add('active');
+        document.getElementById('onePerson').classList.add('onePerson');
 
         // document.getElementById('editGift').setAttribute('data-state', 'giftForm');
         document.getElementById('addButton').setAttribute('data-action', 'giftForm');
@@ -309,7 +309,7 @@ let app = {
             app.gifts.length = 0;
             app.gifts.push(person.giftIdea);
             person.giftIdea.forEach(gift =>{
-                //let df = document.createElement('div');
+                let df1 = document.createElement('div');
                 let ptitle = document.createElement('p');
                 let pprice = document.createElement('p');
                 let pstorename = document.createElement('p');
@@ -332,11 +332,13 @@ let app = {
                 btn.setAttribute("id", "deleteGift");
                 console.log(gift.GiftID);
 
-                df.appendChild(ptitle);
-                df.appendChild(pprice);
-                df.appendChild(pstorename);
-                df.appendChild(pstoreurl);
-                df.appendChild(btn);
+                df1.appendChild(ptitle);
+                df1.appendChild(pprice);
+                df1.appendChild(btn);
+                df1.appendChild(pstorename);
+                df1.appendChild(pstoreurl);
+
+                df.appendChild(df1);
                 
                 btn.addEventListener('click', app.deleteGift);
             });
@@ -467,7 +469,7 @@ let app = {
     back: ()=>{
         document.getElementById("people").classList.remove('hide');
         document.getElementById("people").classList.add('active');
-        document.getElementById('onePerson').classList.remove('active');
+        document.getElementById('onePerson').classList.remove('onePerson');
         document.getElementById('onePerson').classList.add('hide');
         document.getElementById('addButton').setAttribute('data-action', 'personForm');
         document.getElementById('gifts').classList.remove('active');
