@@ -82,3 +82,6 @@ img{
     flex-direction: row;
     justify-content: space-around;
 }
+#gift btn{
+    height:10px;
+}

@@ -161,6 +161,11 @@ let app = {
     createList:()=>{
         if(app.people.length == 0){
            console.log('empty');
+           let div = document.getElementById('people');
+            div.innerHTML = " ";
+            let p = document.createElement('p');
+            p.textContent = " There is no person to show.";
+            div.appendChild(p);
         }
         else{
             let people = app.people.sort(function(a,b){
@@ -176,9 +181,11 @@ let app = {
             people.forEach(person=>{
                 console.log(person);
                 let df = document.createElement('div');
+                let df1 = document.createElement('div');
                 let pd = document.createElement('p');
                 let pn = document.createElement('p');
                 let btn = document.createElement('img');
+                let btn2 = document.createElement('img');
 
                 console.log(person.KEY);
                 console.log(app.timeConverter(person.persondob));
@@ -186,20 +193,48 @@ let app = {
                 pn.textContent = person.personName;
                 btn.setAttribute("src", 'img/delete.png');
                 btn.setAttribute('data-target', person.personID);
+                btn2.setAttribute('data-target', person.personID);
+                df1.setAttribute('data-target', person.personID);
+
+                df.setAttribute('data-target', person.personID);
 
                 df.appendChild(pd);
                 df.appendChild(pn);
-                df.appendChild(btn);
+                df.appendChild(btn2);
+                df1.appendChild(btn);
                 divf.appendChild(df);
+                divf.appendChild(df1);
 
+                //df.addEventListener('click',app.checkTheClick);
+                df1.addEventListener('click',app.delete);
                 df.addEventListener('click', app.onePersonData);
-                btn.addEventListener('click',app.delete);
+                //pn.addEventListener('click', app.onePersonData);
+                
             });
             // document.getElementById('addButton').setAttribute('data-action', 'personForm');
             document.getElementById('people').innerHTML = " ";
             document.getElementById('people').appendChild(divf);
         }
     },
+
+    // checkTheClick:(ev)=>{
+    //     ev.preventDefault();
+    //     console.log(ev.target.closest);
+    //     console.log(ev.target.nodeName);
+    //     console.log(ev);
+    //     let evr = ev.currentTarget;
+    //     let img = "IMG";
+    //     if(ev.target.nodeName = img)
+    //     {
+    //         console.log('matched')
+    //         console.log(evr);
+    //         app.delete(evr);
+    //         return;
+    //     }
+    //     console.log("didn't match");
+    //     app.onePersonData(evr);
+        
+    // },
 
     cleanPersonForm: ()=>{
         let name = document.getElementById("name");
@@ -253,10 +288,10 @@ let app = {
         document.getElementById('gifts').classList.add('active');
         let person = app.people.find(element => element.personID == id);
         console.log(person); 
-        console.log(person.giftIdea);
-        console.log(app.gifts);
+        //console.log(person.giftIdea);
+        //console.log(app.gifts);
         //app.gifts.push(person.giftIdea);
-        console.log(app.gifts);
+        //console.log(app.gifts);
 
         if(app.gifts.length == 0 && person.giftIdea == 0)
         {
@@ -271,20 +306,31 @@ let app = {
             document.getElementById('gifts').innerHTML = " ";
             let df = document.createElement('div');
             console.log(person.giftIdea);
+            app.gifts.length = 0;
+            app.gifts.push(person.giftIdea);
             person.giftIdea.forEach(gift =>{
                 //let df = document.createElement('div');
                 let ptitle = document.createElement('p');
                 let pprice = document.createElement('p');
                 let pstorename = document.createElement('p');
                 let pstoreurl = document.createElement('p');
-                let btn = document.createElement('btn');
+                let btn = document.createElement('img');
 
                 ptitle.textContent = gift.title;
-                pprice.textContent = gift.price;
+                let price = new Intl.NumberFormat('en-CA', {
+                    style: 'currency',
+                    currencyDisplay: 'symbol',
+                    currency: 'CAD'
+                }).format(gift.price);
+                pprice.textContent = price;
                 console.log(gift.location);
                 pstorename.textContent = gift.location.storeN;
                 pstoreurl.textContent = gift.location.storeU;
                 btn.setAttribute("src", 'img/delete.png');
+                btn.setAttribute("data-gift", gift.GiftID);
+                btn.setAttribute("data-person", id);
+                btn.setAttribute("id", "deleteGift");
+                console.log(gift.GiftID);
 
                 df.appendChild(ptitle);
                 df.appendChild(pprice);
@@ -292,6 +338,7 @@ let app = {
                 df.appendChild(pstoreurl);
                 df.appendChild(btn);
                 
+                btn.addEventListener('click', app.deleteGift);
             });
             document.getElementById('gifts').innerHTML=" ";
             document.getElementById('gifts').appendChild(df);
@@ -362,8 +409,11 @@ let app = {
 
     delete: (ev)=>{
         ev.preventDefault();
+        console.log("indelete");
+        console.log(ev);
+        console.log(ev.currentTarget);
         let id = ev.currentTarget.getAttribute('data-target');
-
+        console.log(id);
         app.people.forEach((person, index) =>{
             if (id ==person.personID){
                 app.people.splice(index, 1);
@@ -375,6 +425,30 @@ let app = {
                 localStorage.setItem(KEY, JSON.stringify(element));
             });
             app.createList();
+        });
+    },
+
+    deleteGift: (ev)=>{
+        console.log(ev);
+        console.log(ev.currentTarget);
+
+        let id = ev.currentTarget.getAttribute('data-gift');
+        let person = ev.currentTarget.getAttribute('data-person');
+        console.log(id);
+        console.log(app.gifts[0]);
+
+        app.gifts[0].forEach((gift, index)=>{
+            if(id == gift.GiftID){
+                console.log(id);
+                app.gifts[0].splice(index, 1);
+            }
+            localStorage.clear();
+            let data = app.people;
+            data.forEach(element => {
+                KEY = element.KEY;
+                localStorage.setItem(KEY, JSON.stringify(element));
+            });
+            app.giftList(person);
         });
     },
 
